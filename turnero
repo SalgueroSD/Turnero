@@ -1,0 +1,103 @@
+pacientes = []
+
+def ingreso_paciente():
+    while True:
+        paciente = input("Ingrese el nombre del paciente: ").lower()
+        if paciente == "":
+            print("El nombre del paciente no puede estar vacío. Inténtalo de nuevo.")
+            continue
+        identificacion = input("Ingrese la identificación del paciente: ").lower()
+        documento = input("Ingrese el número de documento del paciente: ").lower()
+        telefono = input("Ingrese el número de teléfono del paciente: ").lower()
+        email = input("Ingrese el correo electrónico del paciente: ").lower()
+        fecha_turno = input("Ingrese la fecha del turno (en formato dd/mm/aaaa): ").lower()
+        hora_turno = input("Ingrese la hora del turno (en formato hh:mm): ").lower()
+        confirmado_turno = "NO"
+        pacientes.append([paciente, identificacion, documento, telefono, email, fecha_turno, hora_turno, confirmado_turno])
+        respuesta = input("¿Desea ingresar otro paciente? (S/N): ").lower()
+        if respuesta != "s":
+            break
+
+def consulta_paciente():
+    print("Seleccione una opción:")
+    print("1. Consultar paciente por nombre")
+    print("2. Consultar paciente por identificación")
+    print("3. Consultar paciente por documento")
+    opcion = input("Opción: ").lower()
+    if opcion == "1":
+        paciente = input("Ingrese el nombre del paciente: ").lower()
+        for p in pacientes:
+            if p[0] == paciente:
+                print("Paciente:", p[0])
+                print("Identificación:", p[1])
+                print("Documento:", p[2])
+                print("Teléfono:", p[3])
+                print("Correo electrónico:", p[4])
+                print("Fecha del turno:", p[5])
+                print("Hora del turno:", p[6])
+                print("Confirmado:", p[7])
+                print()
+    elif opcion == "2":
+        identificacion = input("Ingrese la identificación del paciente: ").lower()
+        for p in pacientes:
+            if p[1] == identificacion:
+                print("Paciente:", p[0])
+                print("Identificación:", p[1])
+                print("Documento:", p[2])
+                print("Teléfono:", p[3])
+                print("Correo electrónico:", p[4])
+                print("Fecha del turno:", p[5])
+                print("Hora del turno:", p[6])
+                print("Confirmado:", p[7])
+                print()
+    elif opcion == "3":
+        documento = input("Ingrese el número de documento del paciente: ").lower()
+        for p in pacientes:
+            if p[2] == documento:
+                print("Paciente:", p[0])
+                print("Identificación:", p[1])
+                print("Documento:", p[2])
+                print("Teléfono:", p[3])
+                print("Correo electrónico:", p[4])
+                print("Fecha del turno:", p[5])
+                print("Hora del turno:", p[6])
+                print("Confirmado:", p[7])
+                print()
+
+def confirmacion_paciente():
+    no_confirmados = [p for p in pacientes if p[7] == "NO"]
+    if not no_confirmados:
+        print("No hay pacientes sin confirmar.")
+        return
+    print("¿Desea mostrar pacientes no confirmados?")
+    print("1. Sí")
+    print("2. No")
+    opcion = input("Opción: ").lower()
+    if opcion == "1":
+        print("Seleccione los pacientes que desea confirmar:")
+        for i, p in enumerate(no_confirmados):
+            print(i, p[0], p[1], p[2], p[3], p[4])
+        seleccion = input("Selección (separe con comas si desea seleccionar varios pacientes). Si desea salir sin confirmar paciente presione N: ").lower()
+        if seleccion == "n":
+            return
+        seleccion = seleccion.split(",")
+        for s in seleccion:
+            pacientes[int(s)][7] = "SI"
+    elif opcion == "2":
+        return
+
+while True:
+    print("Seleccione una opción:")
+    print("1. Ingreso paciente")
+    print("2. Consulta paciente")
+    print("3. Confirmación paciente")
+    print("4. Salir")
+    opcion = input("Opción: ").lower()
+    if opcion == "1":
+        ingreso_paciente()
+    elif opcion == "2":
+        consulta_paciente()
+    elif opcion == "3":
+        confirmacion_paciente()
+    elif opcion == "4":
+        break
